@@ -23,8 +23,8 @@ export const getPartNumbers = (
       const end = start + match[0].length
       const range = [...Array(end - start).keys()].map((i) => i + start)
 
-      const adjacentValues = range.reduce<Adjacent[]>(
-        (values: Adjacent[], index: number) => {
+      const adjacentValues = range.reduce<Adjacent<string>[]>(
+        (values: Adjacent<string>[], index: number) => {
           return [
             ...values,
             ...getAdjacentValues<string>(row, index, schematic),

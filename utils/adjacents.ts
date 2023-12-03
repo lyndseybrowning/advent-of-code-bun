@@ -18,10 +18,10 @@ const adjacents: AdjacentCollection = {
   south: [1, 0],
   southWest: [1, -1],
   west: [0, -1],
-}
+} as const
 
-export type Adjacent = {
-  value: unknown
+export type Adjacent<T> = {
+  value: T
   coordinate: string
 }
 
@@ -34,9 +34,9 @@ export const getAdjacentValues = <T>(
   rowIndex: number,
   colIndex: number,
   source: Array<T>
-): Array<Adjacent> => {
+): Array<Adjacent<T>> => {
   const rowLength = (source[0] as string).length
-  const adjacentValues: Array<Adjacent> = []
+  const adjacentValues: Array<Adjacent<T>> = []
 
   for (const [row, col] of Object.values(adjacents)) {
     const adjacentRow: number = row < 0 ? rowIndex - 1 : rowIndex + row
