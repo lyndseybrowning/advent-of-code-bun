@@ -1,8 +1,8 @@
+export const getParsedInput = (input: string[]) => {}
+
 export const part1 = () => {}
 
 export const part2 = () => {}
-
-export const getParsedInput = (input: string[]) => {}
 
 const input = Bun.file('./2023/{day}/input.txt')
 
