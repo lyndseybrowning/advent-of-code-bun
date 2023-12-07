@@ -2,7 +2,7 @@ import { expect, test, describe } from 'bun:test'
 
 import {
   Hand,
-  getHandRank,
+  getRankedHands,
   getHandScore,
   getParsedInput,
   part1,
@@ -34,9 +34,16 @@ describe('day 7', () => {
     expect(getHandScore('QT5JA')).toBe('high card')
   })
 
+  test('get hand score when a joker is present', () => {
+    expect(getHandScore('T55J5', true)).toEqual('four of a kind')
+    expect(getHandScore('TJ5J5', true)).toEqual('four of a kind')
+    expect(getHandScore('QJJJJ', true)).toEqual('five of a kind')
+    expect(getHandScore('T5TJ1', true)).toEqual('three of a kind')
+  })
+
   test('rank different hands', () => {
     expect(
-      getHandRank([
+      getRankedHands([
         { hand: 'AT777', bid: 727 },
         { hand: '32T3K', bid: 765 },
       ])
@@ -49,7 +56,7 @@ describe('day 7', () => {
   test('ranked hands when both have the same score', () => {
     // hand 1 is stronger because its second card is stronger
     expect(
-      getHandRank([
+      getRankedHands([
         { hand: 'KK677', bid: 28 },
         { hand: 'KTJJT', bid: 220 },
       ])
@@ -60,7 +67,7 @@ describe('day 7', () => {
   })
 
   test('rank input hands', () => {
-    expect(getHandRank(getParsedInput(input))).toStrictEqual([
+    expect(getRankedHands(getParsedInput(input))).toStrictEqual([
       { hand: '32T3K', bid: 765 },
       { hand: 'KTJJT', bid: 220 },
       { hand: 'KK677', bid: 28 },
@@ -73,7 +80,7 @@ describe('day 7', () => {
     expect(part1(getParsedInput(input))).toEqual(6440)
   })
 
-  test.only('part 2', () => {
-    // expect(part2(getParsedInput(input))).toEqual(5905)
+  test('part 2', () => {
+    expect(part2(getParsedInput(input))).toEqual(5905)
   })
 })
