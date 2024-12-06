@@ -52,7 +52,6 @@ export const getSafetyReport = (report: number[]): SafetyReport => {
   return safetyReport
 }
 
-// 213
 export const part1 = (reports: Reports): number => {
   const safetyReports = reports.map(getSafetyReport)
   const safeReports = safetyReports.filter((report) => report.isSafe)
