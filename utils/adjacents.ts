@@ -9,7 +9,7 @@ type AdjacentCollection = {
   west: readonly number[]
 }
 
-const adjacents: AdjacentCollection = {
+export const adjacents: AdjacentCollection = {
   northWest: [-1, -1],
   north: [-1, 0],
   northEast: [-1, 1],
