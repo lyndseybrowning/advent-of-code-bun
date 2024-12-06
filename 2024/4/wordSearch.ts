@@ -13,12 +13,9 @@ export const wordSearch = ({ grid, word }: WordSearch) => {
       return true
     }
 
-    const [row, col] = position
-
-    let currentLetter
-
     try {
-      currentLetter = grid[row][col]
+      const [row, col] = position
+      const currentLetter = grid[row][col]
 
       if (currentLetter !== word[letterIndex - 1]) {
         return false
