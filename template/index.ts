@@ -4,7 +4,7 @@ export const part1 = () => {}
 
 export const part2 = () => {}
 
-const input = Bun.file('./2023/{day}/input.txt')
+const input = Bun.file('./2024/{day}/input.txt')
 
 const textInput = await input.text()
 const parsedInput = getParsedInput(textInput.split('\n'))
