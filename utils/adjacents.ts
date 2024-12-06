@@ -1,12 +1,12 @@
 type AdjacentCollection = {
-  northWest: readonly number[]
-  north: readonly number[]
-  northEast: readonly number[]
-  east: readonly number[]
-  southEast: readonly number[]
-  south: readonly number[]
-  southWest: readonly number[]
-  west: readonly number[]
+  northWest: number[]
+  north: number[]
+  northEast: number[]
+  east: number[]
+  southEast: number[]
+  south: number[]
+  southWest: number[]
+  west: number[]
 }
 
 export const adjacents: AdjacentCollection = {

@@ -56,4 +56,13 @@ describe('day4', () => {
       })
     ).toEqual(9)
   })
+
+  test('part 2 no matches', () => {
+    expect(
+      part2({
+        grid: ['..M', '.A.', 'S.S'],
+        word: 'MAS',
+      })
+    ).toEqual(0)
+  })
 })

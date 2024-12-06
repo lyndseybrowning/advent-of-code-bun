@@ -14,6 +14,15 @@ export const wordSearch = ({ grid, word }: WordSearch) => {
     }
 
     const [row, col] = position
+
+    let currentLetter
+
+    try {
+      currentLetter = grid[row][col]
+    } catch {
+      return false
+    }
+
     const [rowDirection, colDirection] = direction
 
     const nextRow: number = rowDirection < 0 ? row - 1 : rowDirection + row
@@ -23,7 +32,8 @@ export const wordSearch = ({ grid, word }: WordSearch) => {
       nextRow >= 0 &&
       nextRow < grid.length &&
       nextCol >= 0 &&
-      nextCol < grid[0].length
+      nextCol < grid[0].length &&
+      currentLetter === word[letterIndex - 1]
 
     if (!canKeepMoving) {
       return false
