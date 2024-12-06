@@ -1,9 +1,11 @@
 import { getSumOfDigits } from '../../utils/getSumOfDigits'
 
-const getMultiplier = (multiplier: string): number[] => {
-  return multiplier
+const multiplyInstruction = (multiplier: string): number => {
+  const [first, second] = multiplier
     .split(',')
     .map((text) => Number(text.replace(/[^0-9]{1,3}/g, '')))
+
+  return first * second
 }
 
 export const part1 = (corruptedMemory: string): number => {
@@ -19,10 +21,7 @@ export const part1 = (corruptedMemory: string): number => {
     return 0
   }
 
-  const multipliedInstructions = realInstructions.map((instruction) => {
-    const [first, second] = getMultiplier(instruction)
-    return first * second
-  })
+  const multipliedInstructions = realInstructions.map(multiplyInstruction)
 
   return getSumOfDigits(multipliedInstructions)
 }
@@ -36,7 +35,7 @@ export const part2 = (corruptedMemory: string) => {
     /(mul\([0-9]{1,3},[0-9]{1,3}\)|do\(\))|don't\(\)/gm
   )
 
-  if (!instructions || instructions.length === 0) {
+  if (!instructions) {
     return 0
   }
 
@@ -49,8 +48,7 @@ export const part2 = (corruptedMemory: string) => {
     } else if (instruction === 'do()') {
       shouldOperate = true
     } else if (shouldOperate) {
-      const [first, second] = getMultiplier(instruction)
-      sumOfMultipliers += first * second
+      sumOfMultipliers += multiplyInstruction(instruction)
     }
   }
 
@@ -61,7 +59,6 @@ const input = Bun.file('./2024/3/input.txt')
 
 const textInput = await input.text()
 
-// 170807108
 const p1 = part1(textInput)
 const p2 = part2(textInput)
 
