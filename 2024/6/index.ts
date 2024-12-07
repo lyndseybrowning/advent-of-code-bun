@@ -1,10 +1,13 @@
 import { adjacents as directions } from '../../utils/adjacents'
 
+type Direction = 'north' | 'south' | 'east' | 'west'
+type VisitedPosition = Map<string, Direction>
+
 type Movement = {
   fromPosition: [number, number]
-  direction: 'north' | 'south' | 'east' | 'west'
+  direction: Direction
   map: string[]
-  visitedPositions?: Set<string>
+  visitedPositions: VisitedPosition
 }
 
 const getNextDirection = (
@@ -39,10 +42,19 @@ const move = ({ map, fromPosition, direction, visitedPositions }: Movement) => {
     return
   }
 
+  /**
+   * A loop is detected if going in the same direction from the same position for a second time
+   */
+  if (
+    visitedPositions.get(`${nextRowPosition}.${nextColPosition}`) === direction
+  ) {
+    throw new Error('caught in a loop!')
+  }
+
   const nextPosition = map[nextRowPosition][nextColPosition]
 
   if (nextPosition !== '#') {
-    visitedPositions?.add(`${nextRowPosition}.${nextColPosition}`)
+    visitedPositions.set(`${nextRowPosition}.${nextColPosition}`, direction)
 
     move({
       map,
@@ -60,13 +72,14 @@ const move = ({ map, fromPosition, direction, visitedPositions }: Movement) => {
   }
 }
 
-const getVisitedPositions = (map: string[]): Set<string> => {
-  const visitedPositions = new Set<string>()
+const getVisitedPositions = (map: string[]): VisitedPosition => {
+  const visitedPositions = new Map()
 
   map.forEach((row, rowIndex) => {
     Array.from(row).forEach((position, colIndex) => {
       if (position === '^') {
-        visitedPositions.add(`${rowIndex}.${colIndex}`)
+        visitedPositions.set(`${rowIndex}.${colIndex}`, 'north')
+
         move({
           map,
           fromPosition: [rowIndex, colIndex],
@@ -94,12 +107,12 @@ export const part2 = (input: string[]) => {
   /**
    * Don't include the start position
    */
-  const positions = Array.from(visitedPositions).slice(1)
+  const positions = Array.from(visitedPositions.keys()).slice(1)
 
   positions.forEach((position: any) => {
     const [newRow, newCol] = position.split('.').map(Number)
 
-    const adjustedMap = input.map((row, rowIndex) => {
+    const mapWithBoundary = input.map((row, rowIndex) => {
       return Array.from(row)
         .map((col, colIndex) => {
           if (col === '^') {
@@ -114,17 +127,15 @@ export const part2 = (input: string[]) => {
         .join('')
     })
 
-    adjustedMap.forEach((row, rowIndex) => {
+    mapWithBoundary.forEach((row, rowIndex) => {
       Array.from(row).forEach((position, colIndex) => {
         if (position === '^') {
-          /**
-           * This is lazy and needs to be refactored!
-           */
           try {
             move({
-              map: adjustedMap,
+              map: mapWithBoundary,
               fromPosition: [rowIndex, colIndex],
               direction: 'north',
+              visitedPositions: new Map(),
             })
           } catch {
             numberOfLoops += 1
