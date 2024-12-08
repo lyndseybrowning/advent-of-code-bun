@@ -1,6 +1,6 @@
 import { getSumOfDigits } from '../../utils/getSumOfDigits'
 
-export type EquationCollection = Record<number, number[]>
+export type EquationCollection = number[][]
 
 type Operator = '*' | '+'
 
@@ -58,27 +58,25 @@ const computeTrueValue = (
 }
 
 export const getParsedInput = (input: string[]): EquationCollection => {
-  return input.reduce((equations: EquationCollection, equation: string) => {
+  return input.map((equation: string) => {
     const [testValue, numbers] = equation.split(':')
     const remainingNumbers = numbers.split(' ').map(Number).slice(1)
 
-    equations[Number(testValue)] = remainingNumbers
-
-    return equations
-  }, {})
+    return [Number(testValue), ...remainingNumbers]
+  }, [])
 }
 
 export const part1 = (equations: EquationCollection): number => {
   const trueValues: number[] = []
 
-  for (const equation in equations) {
-    const value = Number(equation)
-    const isTrueValue = computeTrueValue(equations[equation], value)
+  equations.forEach((equation) => {
+    const [trueValue, ...numbers] = equation
+    const isTrueValue = computeTrueValue(numbers, trueValue)
 
     if (isTrueValue) {
-      trueValues.push(value)
+      trueValues.push(trueValue)
     }
-  }
+  })
 
   const totalCalibrationResult = getSumOfDigits(trueValues)
 
