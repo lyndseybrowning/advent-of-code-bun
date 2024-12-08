@@ -33,7 +33,12 @@ describe('day7', () => {
 
   test('part 1', () => {
     expect(part1(parsedInput)).toEqual(3749)
+    expect(part1([[45711, 50, 1, 1, 811, 52, 887]])).toEqual(45711)
   })
 
-  test('part 2', () => {})
+  test('part 2', () => {
+    expect(part2([[156, 15, 6]])).toEqual(156)
+
+    expect(part2(parsedInput)).toEqual(11387)
+  })
 })
