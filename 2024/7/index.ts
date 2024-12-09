@@ -34,14 +34,8 @@ const computeTrueValue = (
   computedValues: number[],
   operators: Operator[]
 ): boolean => {
-  const isTrueValue = computedValues.includes(trueValue)
-
-  if (isTrueValue) {
-    return true
-  }
-
   if (values.length === 0) {
-    return isTrueValue
+    return computedValues.includes(trueValue)
   }
 
   if (computedValues.length === 0) {
