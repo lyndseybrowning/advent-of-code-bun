@@ -21,15 +21,16 @@ export const part1 = (map: string[]): number => {
         for (const [posX, posY] of antenna) {
           const diffX = Math.abs(posX - x)
           const diffY = posY - y
+          const posDiffY = Math.abs(diffY)
 
           const antinode1: NodePosition = [
             posX - diffX,
-            diffY < 0 ? posY - Math.abs(diffY) : posY + Math.abs(diffY),
+            diffY < 0 ? posY - posDiffY : posY + posDiffY,
           ]
 
           const antinode2: NodePosition = [
             x + diffX,
-            diffY < 0 ? y + Math.abs(diffY) : y - Math.abs(diffY),
+            diffY < 0 ? y + posDiffY : y - posDiffY,
           ]
 
           if (isInBoundary(antinode1)) {
